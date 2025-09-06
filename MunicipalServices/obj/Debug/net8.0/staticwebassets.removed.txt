@@ -1,0 +1,10 @@
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\bg-community.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\bg-sky.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\community.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\crowd.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\event.png
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\festival.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\festival.png
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\people.png
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\service.jpg
+C:\Users\Derik\source\repos\MunicipalServices\MunicipalServices\wwwroot\images\service.png
