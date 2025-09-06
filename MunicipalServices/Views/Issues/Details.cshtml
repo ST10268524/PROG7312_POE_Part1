@@ -1,0 +1,61 @@
+﻿@model MunicipalServices.Models.Issue
+@{
+    ViewBag.Title = "Issue Details";
+}
+
+<div class="container mt-4">
+    <h2>Issue Details</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Reference Number</dt>
+        <dd class="col-sm-9">@Model.ReferenceNumber</dd>
+
+        <dt class="col-sm-3">Location</dt>
+        <dd class="col-sm-9">@Model.Location</dd>
+
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">@Model.Category</dd>
+
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">
+            <span class="text-black badge badge-@(Model.Status == IssueStatus.Resolved ? "success" :
+                                                         Model.Status == IssueStatus.InProgress ? "primary" :
+                                                         Model.Status == IssueStatus.InQueue ? "warning" : "info")">
+                @Model.Status
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Submitted</dt>
+        <dd class="col-sm-9">@Model.CreatedAt.ToLocalTime().ToString("f")</dd>
+
+        @if (!string.IsNullOrEmpty(Model.AttachmentFileName))
+        {
+            <dt class="col-sm-3">Attachment</dt>
+            <dd class="col-sm-9">
+                <a href="~/uploads/@Model.AttachmentFileName" target="_blank">View Attachment</a>
+            </dd>
+        }
+
+        <dt class="col-sm-3">Notifications</dt>
+        <dd class="col-sm-9">
+            @if (Model.NotifyBySms)
+            {
+                <span class="badge badge-info">SMS</span>
+            }
+            @if (Model.NotifyByEmail)
+            {
+                <span class="badge badge-info">Email</span>
+            }
+            @if (!Model.NotifyBySms && !Model.NotifyByEmail)
+            {
+                <span class="text-muted">None</span>
+            }
+        </dd>
+    </dl>
+
+    <a href="@Url.Action("Index", "Issues")" class="btn btn-basic">Back to Reports</a>
+</div>

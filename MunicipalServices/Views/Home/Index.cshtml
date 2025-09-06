@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Hero Section -->
+<div class="container py-1">
+    <div class="row align-items-center">
+        <!-- Text -->
+        <div class="col-md-6">
+            <h1 class="display-3 fw-bold text-dark mb-3">Make a Change</h1>
+            <p class="lead text-dark mb-4">
+                Report issues, track service requests, and stay informed about <br /> your community.
+            </p>
+            <a href="@Url.Action("Create", "Issues")" class="btn btn-main btn-lg mb-2">
+                <i class="fas fa-plus-circle me-2"></i> Report Issue
+            </a>
+            <a href="@Url.Action("Index", "Issues")" class="btn btn-basic btn-lg mb-2">
+                <i class="fas fa-list me-2"></i> View Issues
+            </a>
+        </div>
+
+        <!-- Image -->
+        <div class="col-md-6 text-center mb-3">
+            <img src="~/images/bg-union.jpg" class="img-fluid rounded shadow" alt="Community Image" />
+        </div>
+    </div>
+</div>
+
+<!-- Feature Cards -->
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <i class="fas fa-bullhorn fa-3x color-main mb-3"></i>
+                <h5 class="fw-bold">Local Events</h5>
+                <p class="text-muted">Stay updated with community events and important announcements.</p>
+                <button class="btn btn-outline-secondary" disabled>Coming Soon</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <i class="fas fa-tasks fa-3x color-main mb-3"></i>
+                <h5 class="fw-bold">Service Requests</h5>
+                <p class="text-muted">Track the status of your service requests in real time.</p>
+                <button class="btn btn-outline-secondary" disabled>Coming Soon</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <i class="fas fa-users fa-3x color-main mb-3"></i>
+                <h5 class="fw-bold">Community Engagement</h5>
+                <p class="text-muted">Connect with your municipality and share your feedback.</p>
+                <button class="btn btn-outline-secondary" disabled>Coming Soon</button>
+            </div>
+        </div>
+    </div>
+</div>

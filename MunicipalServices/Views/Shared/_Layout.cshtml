@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MunicipalServices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MunicipalServices.styles.css" asp-append-version="true" />
+    
+
+</head>
+<body class="d-flex flex-column @(ViewData["BodyClass"] ?? "")">
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-2">
+            <div class="container">
+                <!-- Logo with a hands icon -->
+                <a class="navbar-brand fw-bold d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-hands-helping me-1"></i> MunicipalServices
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+
+                        <!-- Issues dropdown -->
+                        <li class="nav-item dropdown mx-2">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="issuesDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-exclamation-circle me-1"></i> Issues
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="issuesDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Issues" asp-action="Create">
+                                        <i class="fas fa-plus-circle me-2 text-success"></i> Submit Issue
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Issues" asp-action="Index">
+                                        <i class="fas fa-list me-2 color-main"></i> View Issues
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt me-1"></i> Privacy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container flex-grow-1 my-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-3 border-top">
+        <div class="container">
+            <p class="mb-0 text-muted small">&copy; 2025 Derik Korf. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

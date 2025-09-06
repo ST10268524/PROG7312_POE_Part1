@@ -1,0 +1,333 @@
+﻿@model MunicipalServices.Models.Issue
+@{
+    ViewBag.Title = "Report an Issue";
+}
+
+<div class="container mt-1">
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <!-- Back Arrow -->
+            <a href="@Url.Action("Index", "Home")" class="btn btn-icon p-1 fs-4"><i class="fas fa-arrow-left me-2"></i></a>
+
+            <!-- Title centered -->
+            <div class="text-center flex-grow-1">
+                <h2 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>Report an Issue</h2>
+                <p class="mb-0">Help us keep your community clean and safe</p>
+            </div>
+
+            <!-- Placeholder to keep flex spacing consistent -->
+            <div style="width: 36px;"></div>
+        </div>
+
+        <div class="card-body">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step completed" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Location</div>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Category</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Description</div>
+                </div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Attachment</div>
+                </div>
+            </div>
+
+            <!-- Validation Summary -->
+            <div class="alert alert-danger validation-summary" id="validationSummary" style="display: none;">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span id="validationMessage">Please fix the errors below before submitting.</span>
+            </div>
+
+            @using (Html.BeginForm("Create", "Issues", FormMethod.Post, new { enctype = "multipart/form-data", id = "reportForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- Location -->
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Location, new { @class = "form-label fw-bold" })
+                    @Html.TextBoxFor(m => m.Location, new { @class = "form-control", placeholder = "Enter street address, intersection, or landmark", id = "Location" })
+                    <div class="field-requirement">Minimum 3 characters required</div>
+                    @Html.ValidationMessageFor(m => m.Location, null, new { @class = "invalid-feedback", id = "locationError" })
+                </div>
+
+                <!-- Category -->
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Category, new { @class = "form-label fw-bold" })
+                    @Html.DropDownListFor(m => m.Category, (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-select", id = "Category" })
+                    @Html.ValidationMessageFor(m => m.Category, null, new { @class = "invalid-feedback", id = "categoryError" })
+                </div>
+
+                <!-- Description -->
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Description, new { @class = "form-label fw-bold" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Describe the issue in detail. When did you notice it? How is it affecting the community?", id = "Description", rows = "3" })
+                    <div class="field-requirement">Minimum 10 characters required</div>
+                    @Html.ValidationMessageFor(m => m.Description, null, new { @class = "invalid-feedback", id = "descriptionError" })
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <!-- File Upload -->
+                        <div class="form-group mb-3 col-6 fl">
+                            <label class="form-label fw-bold">Attach image or document (5MB)</label>
+                            <div class="file-upload-container" id="dropZone">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-secondary"></i>
+                                <h5>Drag and drop your file</h5>
+                                <p class="file-info">or</p>
+                                <input type="file" name="attachment" id="attachment" class="d-none" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                                <button type="button" class="btn btn-outline-primary mt-2" id="browseButton">Browse Files</button>
+                                <div class="file-info mt-3 gone">Supported formats: JPG, PNG, PDF, DOC, DOCX (Max 5MB)</div>
+                            </div>
+                            <div id="filePreview" class="mt-3"></div>
+                            @Html.ValidationMessage("AttachmentFileName", null, new { @class = "invalid-feedback", id = "fileError" })
+                        </div>
+
+                        <!-- Notification Options -->
+                        <div class="notification-options mb-3 col-6">
+                            <h5 class="mb-3"><i class="fas fa-bell me-2"></i>Notification Options (Optional)</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="notifySms" id="notifySms">
+                                <label class="form-check-label" for="notifySms">Notify me via SMS when there's an update</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="notifyEmail" id="notifyEmail">
+                                <label class="form-check-label" for="notifyEmail">Notify me via Email when there's an update</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
+                <!-- Progress and Encouragement -->
+                <div class="encouragement-box">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-lightbulb me-2 text-warning"></i>
+                            <span id="encouragement">Complete the form to submit your report</span>
+                        </div>
+                        <div class="fw-bold" id="progressText">0% Complete</div>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-basic me-md-2"><i class="fas fa-times me-1"></i> Cancel</a>
+                    <button type="submit" class="btn btn-main"><i class="fas fa-paper-plane me-1"></i> Submit Report</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Variables
+            let selectedFile = null;
+
+            // Update progress function
+            function updateProgress() {
+                let score = 0;
+                const location = $('#Location').val().trim();
+                const category = $('#Category').val();
+                const description = $('#Description').val().trim();
+
+                // Update steps
+                if (location.length > 2) {
+                    $('#step1').addClass('completed').removeClass('active');
+                    $('#step2').addClass('active');
+                    score += 25;
+                } else {
+                    $('#step1').addClass('active').removeClass('completed');
+                    $('#step2').removeClass('active');
+                }
+
+                if (category) {
+                    $('#step2').addClass('completed').removeClass('active');
+                    $('#step3').addClass('active');
+                    score += 25;
+                } else if (location.length > 2) {
+                    $('#step2').addClass('active'); // no .removeClass('completed') here
+                }
+
+                if (description.length > 10) {
+                    $('#step3').addClass('completed').removeClass('active');
+                    $('#step4').addClass('active');
+                    score += 25;
+                } else if (category) {
+                    $('#step3').addClass('active'); // don't remove completed
+                }
+
+                if ($('#attachment').val()) {
+                    $('#step4').addClass('completed').removeClass('active');
+                    score += 25;
+                } else if (description.length > 10) {
+                    $('#step4').addClass('active'); // don't remove completed
+                }
+
+
+                // Update progress bar
+                $('#progressBar').css('width', score + '%').text(score + '%');
+                $('#progressText').text(score + '% Complete');
+
+                // Update encouragement message
+                let msg = "Complete the form to submit your report";
+                if (score === 0) {
+                    msg = "Start by entering the location of the issue";
+                } else if (score < 50) {
+                    msg = "Good start! Now select a category and describe the issue";
+                } else if (score < 75) {
+                    msg = "Almost there! Consider adding a photo for better context";
+                } else if (score < 100) {
+                    msg = "Looking good! You can submit now or add a photo";
+                } else {
+                    msg = "Perfect! Your report is ready to be submitted";
+                }
+                $('#encouragement').text(msg);
+            }
+
+            // Initialize progress
+            updateProgress();
+
+            // Event listeners for form fields
+            $('#Location, #Category, #Description').on('input change', function() {
+                $(this).removeClass('is-invalid');
+                $('#validationSummary').hide();
+                updateProgress();
+            });
+
+            // File upload handling
+            $('#browseButton').on('click', function() {
+                $('#attachment').click();
+            });
+
+            $('#attachment').on('change', function(e) {
+                handleFileSelection(e.target.files);
+            });
+
+            // Drag and drop functionality
+            const dropZone = $('#dropZone');
+            dropZone.on('dragover', function(e) {
+                e.preventDefault();
+                dropZone.addClass('dragover');
+            });
+
+            dropZone.on('dragleave', function() {
+                dropZone.removeClass('dragover');
+            });
+
+            dropZone.on('drop', function(e) {
+                e.preventDefault();
+                dropZone.removeClass('dragover');
+                handleFileSelection(e.originalEvent.dataTransfer.files);
+            });
+
+            function handleFileSelection(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+                    const fileExt = file.name.split('.').pop().toLowerCase();
+                    const allowedExt = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+
+                    if (!allowedExt.includes(fileExt)) {
+                        showFileError('Invalid file type. Please upload JPG, PNG, PDF, DOC, or DOCX files.');
+                        return;
+                    }
+
+                    if (file.size > maxSize) {
+                        showFileError('File size exceeds 5MB limit. Please choose a smaller file.');
+                        return;
+                    }
+
+                    // Valid file
+                    selectedFile = file;
+                    $('#fileError').hide();
+                    updateProgress();
+
+                    // Show file preview
+                    const filePreview = $('#filePreview');
+                    filePreview.html(`
+                        <div class="d-flex align-items-center alert alert-success py-2">
+                            <i class="fas fa-file me-2"></i>
+                            <div class="flex-grow-1">${file.name} (${formatFileSize(file.size)})</div>
+                            <button type="button" class="btn-close" onclick="removeFile()"></button>
+                        </div>
+                    `);
+                }
+            }
+
+            function showFileError(message) {
+                $('#fileError').text(message).show();
+                $('#dropZone').addClass('is-invalid');
+            }
+
+            window.removeFile = function() {
+                selectedFile = null;
+                $('#attachment').val('');
+                $('#filePreview').empty();
+                $('#fileError').hide();
+                updateProgress();
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes < 1024) return bytes + ' bytes';
+                else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                else return (bytes / 1048576).toFixed(1) + ' MB';
+            }
+
+            // Form submission
+            $('#reportForm').on('submit', function(e) {
+                let isValid = true;
+                const location = $('#Location').val().trim();
+                const category = $('#Category').val();
+                const description = $('#Description').val().trim();
+
+                // Validate location
+                if (location.length < 3) {
+                    $('#Location').addClass('is-invalid');
+                    $('#locationError').text('Please provide a specific location (at least 3 characters)');
+                    isValid = false;
+                }
+
+                // Validate category
+                if (!category) {
+                    $('#Category').addClass('is-invalid');
+                    $('#categoryError').text('Please select a category');
+                    isValid = false;
+                }
+
+                // Validate description
+                if (description.length < 10) {
+                    $('#Description').addClass('is-invalid');
+                    $('#descriptionError').text('Please provide a detailed description (at least 10 characters)');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    $('#validationSummary').show();
+                    $('#validationMessage').text('Please fix the errors highlighted below');
+                    $('html, body').animate({ scrollTop: 0 }, 500);
+                    e.preventDefault();
+                    return;
+                }
+
+                // If we get here, the form is valid
+                $('#validationSummary').hide();
+            });
+        });
+    </script>
+}

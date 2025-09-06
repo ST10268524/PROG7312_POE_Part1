@@ -1,0 +1,17 @@
+﻿
+@model MunicipalServices.Models.Issue
+@{
+    ViewBag.Title = "Report Submitted";
+}
+
+<div class="container mt-4">
+    <div class="alert alert-success">
+        <h4>Thanks — your report was submitted</h4>
+        <p>Reference: <strong>@Model.ReferenceNumber</strong></p>
+        <p>Status: <strong class="text-black">@Model.Status</strong></p>
+        <p>Submitted at: @Model.CreatedAt.ToLocalTime()</p>
+    </div>
+
+    <a href="@Url.Action("Index", "Issues")" class="btn btn-main">View My Reports</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-basic">Back to Main Menu</a>
+</div>
