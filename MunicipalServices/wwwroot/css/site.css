@@ -39,9 +39,9 @@ body {
 }
 
 
-.navbar, .jumbotron {
-    background: #1f6feb;
-    color: white;
+
+.navbar, .jumbotron, footer {
+    background: var(--primary);
 }
 
 .color-main{

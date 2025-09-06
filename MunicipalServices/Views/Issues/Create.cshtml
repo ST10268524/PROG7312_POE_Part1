@@ -172,11 +172,13 @@
                     $('#step3').addClass('active'); // don't remove completed
                 }
 
-                if ($('#attachment').val()) {
+                if (document.getElementById('attachment').files.length > 0) {
                     $('#step4').addClass('completed').removeClass('active');
                     score += 25;
                 } else if (description.length > 10) {
-                    $('#step4').addClass('active'); // don't remove completed
+                    $('#step4').addClass('active').removeClass('completed');
+                } else {
+                    $('#step4').removeClass('active completed'); // reset fully if nothing before
                 }
 
 
@@ -253,7 +255,12 @@
                         return;
                     }
 
-                    // Valid file
+                    // ✅ Fix: assign file to the hidden input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    document.getElementById('attachment').files = dataTransfer.files;
+
+                    // Store reference
                     selectedFile = file;
                     $('#fileError').hide();
                     updateProgress();
@@ -270,6 +277,7 @@
                 }
             }
 
+
             function showFileError(message) {
                 $('#fileError').text(message).show();
                 $('#dropZone').addClass('is-invalid');
@@ -277,11 +285,12 @@
 
             window.removeFile = function() {
                 selectedFile = null;
-                $('#attachment').val('');
+                document.getElementById('attachment').value = '';
                 $('#filePreview').empty();
                 $('#fileError').hide();
                 updateProgress();
             }
+
 
             function formatFileSize(bytes) {
                 if (bytes < 1024) return bytes + ' bytes';

@@ -1,7 +1,16 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\bg-community.jpg
 wwwroot\images\bg-sky.jpg
 wwwroot\images\bg-union.jpg
+wwwroot\images\community.jpg
+wwwroot\images\crowd.jpg
+wwwroot\images\event.png
+wwwroot\images\festival.jpg
+wwwroot\images\festival.png
+wwwroot\images\people.png
+wwwroot\images\service.jpg
+wwwroot\images\service.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
