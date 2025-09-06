@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MunicipalServices")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+969f710884488fe1daca9f1b0ca3ca82e98143fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41a4b39a8ada5437b9600af06b779469347a084f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MunicipalServices")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MunicipalServices")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,7 +4,11 @@
 }
 
 <div class="container mt-4 bg-light">
-    <h2>Submitted Reports</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Submitted Reports</h2>
+        <button type="button" class="btn btn-main fs-6" onclick="location.href='@Url.Action("Create", "Issues")'">+</button>
+    </div>
+    
 
     @if (TempData["SuccessMessage"] != null)
     {
@@ -32,16 +36,16 @@
                     <td>@i.Location</td>
                     <td>@i.Category</td>
                     <td>
-                        <span class="badge badge-@(i.Status == IssueStatus.Resolved ? "success" :
-                                                                        i.Status == IssueStatus.InProgress ? "primary" :
-                                                                        i.Status == IssueStatus.InQueue ? "warning" : "info")">
-                        @i.Status
-                    </span>
-                </td>
-                <td>@i.CreatedAt.ToLocalTime().ToString("g")</td>
-                <td><a href="@Url.Action("Details", "Issues", new { id = i.Id })" class="btn btn-sm btn-info">Details</a></td>
-            </tr>
-                        }
+                        <span class="text-black badge badge-@(i.Status == IssueStatus.Resolved ? "bg-success" :
+                                                              i.Status == IssueStatus.InProgress ? "bg-primary" :
+                                                              i.Status == IssueStatus.InQueue ? "bg-warning" : "info")">@i.Status
+                        </span>
+
+                    </td>
+                    <td>@i.CreatedAt.ToLocalTime().ToString("g")</td>
+                    <td><a href="@Url.Action("Details", "Issues", new { id = i.Id })" class="btn btn-main fs-6">Details</a></td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

@@ -40,7 +40,7 @@ body {
 
 
 
-.navbar, .jumbotron, footer {
+.navbar, .jumbotron{
     background: var(--primary);
 }
 
