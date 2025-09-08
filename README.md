@@ -7,6 +7,11 @@ The application is user-friendly and serves as the first step in a broader munic
 
 ---
 
+## 🎥 Demo Video
+Watch the demo video here: [On-board Video](https://youtu.be/_zhSWU2cE8g)
+
+---
+
 ## 📌 Features
 
 - **Report Issues** (implemented)  
